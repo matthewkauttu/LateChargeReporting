@@ -1,0 +1,49 @@
+﻿@model LateChargeReports.Models.DateRange
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h4>Select a date range</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div id="dateRangePickerForm" class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @(Html.Kendo().DateRangePicker()
+                                .Name("MyDateRangePicker")
+                                .Min(new DateTime(1900, 1, 1))
+                                .Max(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day))
+                                .StartField(nameof(LateChargeReports.Models.DateRange.StartDate))
+                                .EndField(nameof(LateChargeReports.Models.DateRange.EndDate))
+                                .HtmlAttributes(new { style = "width: 100%", title = "Date Range Picker" })
+                )
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().Button()
+                                .Name("submit-button")
+                                .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+                                .Events(e => e.Click("onClick"))
+                                .Content("Submit")
+                )
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function onClick() {
+        return kendo.antiForgeryTokens();
+    }
+</script>

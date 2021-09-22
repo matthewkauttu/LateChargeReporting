@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx?wsdl" docRef="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" xmlns:q1="http://pasop.atlas.medcity.net" binding="q1:HCA_UserSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" xmlns:q2="http://pasop.atlas.medcity.net" binding="q2:HCA_UserSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

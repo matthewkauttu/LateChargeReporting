@@ -1,0 +1,213 @@
+﻿@model LateChargeReports.Models.Results
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<h4>Search Patient Data</h4>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div id="dateRangePickerForm" class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @(Html.Kendo().DateRangePicker()
+                                                .Name("MyDateRangePicker")
+                                                .Min(new DateTime(1900, 1, 1))
+                                                .Max(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day))
+                                                .StartField(nameof(LateChargeReports.Models.DateRange.StartDate))
+                                                .EndField(nameof(LateChargeReports.Models.DateRange.EndDate))
+                                                .HtmlAttributes(new { style = "width: 100%", title = "Date Range Picker" })
+                )
+                @Html.ValidationMessageFor(model => model.QueryDates.StartDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.QueryDates.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().Button()
+                                                .Name("submit-button")
+                                                .HtmlAttributes(new { type = "submit", @class = "k-primary" })
+                                                .Events(e => e.Click("onClick"))
+                                                .Content("Submit")
+                )
+            </div>
+        </div>
+    </div>
+    <hr />
+}
+
+<div style="display:table">
+@(Html.Kendo().Grid(Model.DataList)
+                .Name("LateChargeReportData")
+                .Columns(c =>
+                {
+                    c.Bound(p => p.Cpaj02EffectiveDate)
+                     .Title("Effective Date");
+
+                    c.Bound(p => p.UnitNumber)
+                     .Title("Unit Number");
+
+                    c.Bound(p => p.PatientNumber)
+                     .Title("Patient Number");
+
+                    c.Bound(p => p.FieldCode)
+                     .Title("Field Code");
+
+                    c.Bound(p => p.NewData)
+                     .Title("New Data");
+
+                    c.Bound(p => p.SnComment)
+                     .Title("SnComment");
+
+                    c.Bound(p => p.SendToCollections)
+                     .Title("Send To Collections");
+                    
+                    c.Bound(p => p.CurrentCalcExpectedPay)
+                     .Title("Current Calculated Expected Pay")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.PayerPayment)
+                     .Title("Payer Payment")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.CalcAnalysisExpectedPay)
+                     .Title("Calculated Analysis Expected Pay")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.PercentChangeInReimbursement)
+                     .Title("Percent Change In Reimbursement")
+                     .Format("{0:p2}");
+
+                    c.Bound(p => p.ShouldBeAutomated)
+                     .Title("Qualified for Concuity Automation");
+
+                    c.Bound(p => p.PreAutomationComment)
+                     .Title("Pre-Automation Comment");
+
+                    c.Bound(p => p.SystemComment)
+                     .Title("System Comment");
+
+                    c.Bound(p => p.IPlan)
+                     .Title("IPlan");
+
+                    c.Bound(p => p.PatType)
+                     .Title("PatType");
+
+                    c.Bound(p => p.FC)
+                     .Title("FC");
+
+                    c.Bound(p => p.AdmitDate)
+                     .Title("AdmitDate");
+
+                    c.Bound(p => p.DischDate)
+                     .Title("DischDate");
+
+                    c.Bound(p => p.FbillDate)
+                     .Title("FbillDate");
+
+                    c.Bound(p => p.EntDate)
+                     .Title("EntDate");
+
+                    c.Bound(p => p.DOS)
+                     .Title("DOS");
+
+                    c.Bound(p => p.Amount)
+                     .Title("Amount")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.Status)
+                     .Title("Status");
+
+                    c.Bound(p => p.ProcCode)
+                     .Title("ProcCode");
+
+                    c.Bound(p => p.RevCode)
+                     .Title("RevCode");
+
+                    c.Bound(p => p.ChargeDescription)
+                     .Title("ChargeDescription");
+
+                    c.Bound(p => p.Quantity)
+                     .Title("Quantity");
+
+                    c.Bound(p => p.RunDate)
+                     .Title("RunDate");
+
+                    c.Bound(p => p.Q1)
+                     .Title("Q1");
+
+                    c.Bound(p => p.Q2)
+                     .Title("Q2");
+
+                    c.Bound(p => p.Q3)
+                     .Title("Q3");
+
+                    c.Bound(p => p.Q4)
+                     .Title("Q4");
+
+                    c.Bound(p => p.APC)
+                     .Title("APC");
+
+                    c.Bound(p => p.B)
+                     .Title("B");
+
+                    c.Bound(p => p.Batch)
+                     .Title("Batch");
+
+                    c.Bound(p => p.Department)
+                     .Title("Department");
+
+                    c.Bound(p => p.HCPCS)
+                     .Title("HCPCS");
+
+                    c.Bound(p => p.RCode)
+                     .Title("RCode");
+
+                    c.Bound(p => p.RCode)
+                     .Title("RCode");
+
+                    c.Bound(p => p.Proc)
+                     .Title("Proc");
+
+                    c.Bound(p => p.PatName)
+                     .Title("PatName");
+
+                    c.Bound(p => p.LateCharges)
+                     .Title("LateCharges")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.PATotalCharges)
+                     .Title("PATotalCharges")
+                     .Format("{0:c2}");
+
+                    c.Bound(p => p.Ins1Pymt)
+                     .Title("Ins1Pymt")
+                     .Format("{0:c2}");
+                })
+                .Pageable(p =>
+                {
+                    p.PageSizes(new[] { 5, 10, 30 });
+                })
+                .Sortable()
+                .Filterable()
+                .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .ServerOperation(false)
+                                )
+                .ToolBar(tools => tools.Excel())
+                .Excel(excel => excel
+                        .AllPages(true)
+                        )
+    )
+</div>
+
+<script>
+    function onClick() {
+        return kendo.antiForgeryTokens();
+    }
+</script>

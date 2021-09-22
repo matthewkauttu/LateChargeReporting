@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://pasop.atlas.medcity.net" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://pasop.atlas.medcity.net" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://pasop.atlas.medcity.net">
+      <s:element name="ValidateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateUserResult" type="tns:HCAUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="HCAUser">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsValidUser" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Application" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserError" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SecurityLevel" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Team" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AuthorizedFacilities">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthorizedFacilitiesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthorizedFacilitiesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HCAUser" nillable="true" type="tns:HCAUser" />
+      <s:element name="DataSet" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="s:schema" />
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ValidateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizedFacilitiesSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthorizedFacilities" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizedFacilitiesSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthorizedFacilitiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserHttpGetIn">
+    <wsdl:part name="UserId" type="s:string" />
+    <wsdl:part name="ApplicationName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:HCAUser" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizedFacilitiesHttpGetIn">
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="ApplicationName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizedFacilitiesHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:portType name="HCA_UserSoap">
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input message="tns:ValidateUserSoapIn" />
+      <wsdl:output message="tns:ValidateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizedFacilities">
+      <wsdl:input message="tns:AuthorizedFacilitiesSoapIn" />
+      <wsdl:output message="tns:AuthorizedFacilitiesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="HCA_UserHttpGet">
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input message="tns:ValidateUserHttpGetIn" />
+      <wsdl:output message="tns:ValidateUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizedFacilities">
+      <wsdl:input message="tns:AuthorizedFacilitiesHttpGetIn" />
+      <wsdl:output message="tns:AuthorizedFacilitiesHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HCA_UserSoap" type="tns:HCA_UserSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://pasop.atlas.medcity.net/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizedFacilities">
+      <soap:operation soapAction="http://pasop.atlas.medcity.net/AuthorizedFacilities" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HCA_UserSoap12" type="tns:HCA_UserSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateUser">
+      <soap12:operation soapAction="http://pasop.atlas.medcity.net/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizedFacilities">
+      <soap12:operation soapAction="http://pasop.atlas.medcity.net/AuthorizedFacilities" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HCA_UserHttpGet" type="tns:HCA_UserHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ValidateUser">
+      <http:operation location="/ValidateUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthorizedFacilities">
+      <http:operation location="/AuthorizedFacilities" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HCA_User">
+    <wsdl:port name="HCA_UserSoap" binding="tns:HCA_UserSoap">
+      <soap:address location="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HCA_UserSoap12" binding="tns:HCA_UserSoap12">
+      <soap12:address location="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HCA_UserHttpGet" binding="tns:HCA_UserHttpGet">
+      <http:address location="http://sscop.atlas.medcity.net:5400/hcacommon-tools/hca_user.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
